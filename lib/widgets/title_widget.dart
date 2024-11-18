@@ -13,7 +13,7 @@ class _TitleWidgetState extends State<TitleWidget> {
     return const Text(
       'Cryptocurrency Converter Calculator',
       style: TextStyle(
-        fontSize: 24,
+        fontSize: 20,
         fontWeight: FontWeight.w600,
       ),
     );

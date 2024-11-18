@@ -9,15 +9,24 @@ import 'api/coin_model.dart';
 void main() async {
   runApp(const MainApp());
   List<CryptoValue> cryptoList = [];
+  List<String> symbolsList = [];
   NetworkService networkService = NetworkService();
-  print('ssssssss');
-  CoinModel? bitcoin = await networkService.getCoin('aaa').whenComplete(
+
+  List<CoinModel> coinsList = [];
+  CoinModel? bitcoin = await networkService.getBitcoin().whenComplete(
     () {
       print('BITCOIN:');
     },
   );
-
-  print('next');
+  if (bitcoin != null) {
+    for (var element in bitcoin.marketData.currentPrice.keys) {
+      symbolsList.add(element);
+      CoinModel? coin = await networkService.getCoin(element);
+      if (coin != null) {
+        coinsList.add(coin);
+      }
+    }
+  }
 
   CryptoValue btc = CryptoValue('Btc', 93.14);
   CryptoValue usd = CryptoValue('usd', 64.55);
