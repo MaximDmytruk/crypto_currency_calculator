@@ -9,10 +9,12 @@ class CryptoDropMenuWidget extends StatefulWidget {
 
 class _CryptoDropMenuWidgetState extends State<CryptoDropMenuWidget> {
   String? _selectedValue;
-
+  final TextEditingController textController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return DropdownMenu<String>(
+      controller: textController,
+      requestFocusOnTap: true,
       label: const Text(
         'Сurrency',
         style: TextStyle(fontSize: 12),

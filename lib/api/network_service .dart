@@ -35,9 +35,6 @@ class NetworkService {
 
       dynamic json = jsonDecode(response.data.toString());
       coin = CoinModel.fromJson(json);
-      print(coin.id);
-      print(coin.name);
-      print(coin.marketData.currentPrice['php']);
     } catch (e) {
       print('Помилка - $e');
     }

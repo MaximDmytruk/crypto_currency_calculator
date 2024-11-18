@@ -8,6 +8,7 @@ import 'api/coin_model.dart';
 
 void main() async {
   runApp(const MainApp());
+
   List<CryptoValue> cryptoList = [];
   List<String> symbolsList = [];
   NetworkService networkService = NetworkService();
@@ -21,10 +22,11 @@ void main() async {
   if (bitcoin != null) {
     for (var element in bitcoin.marketData.currentPrice.keys) {
       symbolsList.add(element);
-      CoinModel? coin = await networkService.getCoin(element);
-      if (coin != null) {
-        coinsList.add(coin);
-      }
+
+      // CoinModel? coin = await networkService.getCoin();
+      // if (coin != null) {
+      //   coinsList.add(coin);
+      // }
     }
   }
 
