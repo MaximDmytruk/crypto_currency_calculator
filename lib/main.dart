@@ -5,6 +5,7 @@ import 'widgets/number_textfield_widget.dart';
 import 'widgets/title_widget.dart';
 import 'api/network_service .dart';
 import 'api/coin_model.dart';
+import 'api/coin_id.dart';
 
 void main() async {
   runApp(const MainApp());
@@ -14,21 +15,28 @@ void main() async {
   NetworkService networkService = NetworkService();
 
   List<CoinModel> coinsList = [];
-  CoinModel? bitcoin = await networkService.getBitcoin().whenComplete(
-    () {
-      print('BITCOIN:');
-    },
-  );
-  if (bitcoin != null) {
-    for (var element in bitcoin.marketData.currentPrice.keys) {
-      symbolsList.add(element);
+  List<CoinsId>? coinIds = [];
 
-      // CoinModel? coin = await networkService.getCoin();
-      // if (coin != null) {
-      //   coinsList.add(coin);
-      // }
-    }
-  }
+  coinIds = await networkService.getAllIds().whenComplete(() {
+    print('Id is!--------------------------------------');
+  });
+  print(coinIds);
+
+  // CoinModel? bitcoin = await networkService.getBitcoin().whenComplete(
+  //   () {
+  //     print('BITCOIN:');
+  //   },
+  // );
+  // if (bitcoin != null) {
+  //   for (var element in bitcoin.marketData.currentPrice.keys) {
+  //     symbolsList.add(element);
+
+  //     // CoinModel? coin = await networkService.getCoin();
+  //     // if (coin != null) {
+  //     //   coinsList.add(coin);
+  //     // }
+  //   }
+  // }
 
   CryptoValue btc = CryptoValue('Btc', 93.14);
   CryptoValue usd = CryptoValue('usd', 64.55);
@@ -61,19 +69,31 @@ class MainAppState extends State<MainApp> {
       home: Scaffold(
         backgroundColor: Colors.white,
         body: Padding(
-          padding: EdgeInsets.all(20),
+          padding: EdgeInsets.all(
+            20,
+          ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TitleWidget(),
-              SizedBox(height: 40),
+              SizedBox(
+                height: 40,
+              ),
               Padding(
-                padding: EdgeInsets.only(left: 8, right: 8),
+                padding: EdgeInsets.only(
+                  left: 8,
+                  right: 8,
+                ),
                 child: NumberTextFieldWidget(),
               ),
-              SizedBox(height: 32),
+              SizedBox(
+                height: 32,
+              ),
               Padding(
-                padding: EdgeInsets.only(left: 8, right: 8),
+                padding: EdgeInsets.only(
+                  left: 8,
+                  right: 8,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
