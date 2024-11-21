@@ -1,7 +1,11 @@
+import 'package:crypto_calculator/api/coin_id.dart';
+import 'package:crypto_calculator/api/coin_model.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 
 class CryptoDropMenuWidget extends StatefulWidget {
-  const CryptoDropMenuWidget({super.key});
+  final List<CoinsId> coinIds;
+  CryptoDropMenuWidget({super.key, required this.coinIds});
 
   @override
   State<CryptoDropMenuWidget> createState() => _CryptoDropMenuWidgetState();
@@ -9,11 +13,11 @@ class CryptoDropMenuWidget extends StatefulWidget {
 
 class _CryptoDropMenuWidgetState extends State<CryptoDropMenuWidget> {
   String? _selectedValue;
-  final TextEditingController textController = TextEditingController();
+  TextEditingController textEditingController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return DropdownMenu<String>(
-      controller: textController,
+      controller: textEditingController,
       requestFocusOnTap: true,
       label: const Text(
         'Сurrency',
@@ -27,12 +31,13 @@ class _CryptoDropMenuWidgetState extends State<CryptoDropMenuWidget> {
           _selectedValue = value;
         });
       },
-      dropdownMenuEntries: const <DropdownMenuEntry<String>>[
-        DropdownMenuEntry(value: 'Value 1', label: 'One'),
-        DropdownMenuEntry(value: 'Value 2', label: 'two'),
-        DropdownMenuEntry(value: 'Value 3', label: 'Three'),
-        DropdownMenuEntry(value: 'Value 4', label: 'Four'),
-      ],
+      dropdownMenuEntries:
+          widget.coinIds.map<DropdownMenuEntry<String>>((CoinsId coin) {
+        return DropdownMenuEntry<String>(
+          value: coin.id,
+          label: coin.name,
+        );
+      }).toList(),
     );
   }
 }

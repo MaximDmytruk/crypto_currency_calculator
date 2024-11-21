@@ -10,18 +10,6 @@ import 'api/coin_id.dart';
 void main() async {
   runApp(const MainApp());
 
-  List<CryptoValue> cryptoList = [];
-  List<String> symbolsList = [];
-  NetworkService networkService = NetworkService();
-
-  List<CoinModel> coinsList = [];
-  List<CoinsId>? coinIds = [];
-
-  coinIds = await networkService.getAllIds().whenComplete(() {
-    print('Id is!--------------------------------------');
-  });
-  print(coinIds);
-
   // CoinModel? bitcoin = await networkService.getBitcoin().whenComplete(
   //   () {
   //     print('BITCOIN:');
@@ -37,22 +25,6 @@ void main() async {
   //     // }
   //   }
   // }
-
-  CryptoValue btc = CryptoValue('Btc', 93.14);
-  CryptoValue usd = CryptoValue('usd', 64.55);
-  CryptoValue tlgm = CryptoValue('tlgm', 41.55);
-  CryptoValue coin = CryptoValue('coin', 1);
-  CryptoValue swa = CryptoValue('swa', 2.36);
-  CryptoValue aaa = CryptoValue('aaa', 14);
-  CryptoValue sss = CryptoValue('sss', 3.99999);
-
-  cryptoList.add(btc);
-  cryptoList.add(usd);
-  cryptoList.add(tlgm);
-  cryptoList.add(coin);
-  cryptoList.add(swa);
-  cryptoList.add(aaa);
-  cryptoList.add(sss);
 }
 
 class MainApp extends StatefulWidget {
@@ -63,43 +35,70 @@ class MainApp extends StatefulWidget {
 }
 
 class MainAppState extends State<MainApp> {
+  final NetworkService networkService = NetworkService();
+
+  List<CoinModel> coinsList = [];
+  List<CoinsId> coinIds = [];
+
+  @override
+  void initState() {
+    super.initState();
+    getAllCoins();
+  }
+
+  Future<void> getAllCoins() async {
+    try {
+      List<CoinsId> coinsIdsActually = await networkService.getAllActuallyIds();
+      setState(() {
+        coinIds = coinsIdsActually;
+        print('Okey-------------------------------------');
+      });
+    } catch (e) {
+      print("error in mainState = $e");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       home: Scaffold(
         backgroundColor: Colors.white,
         body: Padding(
-          padding: EdgeInsets.all(
+          padding: const EdgeInsets.all(
             20,
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TitleWidget(),
-              SizedBox(
+              const TitleWidget(),
+              const SizedBox(
                 height: 40,
               ),
-              Padding(
+              const Padding(
                 padding: EdgeInsets.only(
                   left: 8,
                   right: 8,
                 ),
                 child: NumberTextFieldWidget(),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 32,
               ),
               Padding(
-                padding: EdgeInsets.only(
+                padding: const EdgeInsets.only(
                   left: 8,
                   right: 8,
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    CryptoDropMenuWidget(),
-                    ReplaceButtonWidget(),
-                    CryptoDropMenuWidget(),
+                    CryptoDropMenuWidget(
+                      coinIds: coinIds,
+                    ),
+                    const ReplaceButtonWidget(),
+                    CryptoDropMenuWidget(
+                      coinIds: coinIds,
+                    ),
                   ],
                 ),
               ),
@@ -108,20 +107,5 @@ class MainAppState extends State<MainApp> {
         ),
       ),
     );
-  }
-}
-
-class CryptoValue {
-  final String name;
-  double price;
-
-  CryptoValue(this.name, this.price);
-
-  void setPrice(double newPrice) {
-    price = newPrice;
-  }
-
-  double gerPrice() {
-    return price;
   }
 }

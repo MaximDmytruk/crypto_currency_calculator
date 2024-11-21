@@ -1,11 +1,5 @@
-// To parse this JSON data, do
-//
-//     final coinsId = coinsIdFromJson(jsonString);
 
 import 'dart:convert';
-
-List<CoinsId> coinsIdFromJson(String str) =>
-    List<CoinsId>.from(json.decode(str).map((x) => CoinsId.fromJson(x)));
 
 class CoinsId {
   String id;
