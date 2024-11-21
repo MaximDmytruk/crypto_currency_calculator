@@ -43,10 +43,19 @@ class NetworkService {
     bitcoin = await getBitcoin();
     print('getBitcoin----------------------------------');
 
-    for (var i = 0; i < coinsIds.length; i++) {
-      if (bitcoin.marketData.currentPrice.containsKey(coinsIds[i].symbol)) {
-        coinsIdsActually.add(coinsIds[i]);
+    for (int i = 0; i < coinsIds.length; i++) {
+      for (var key in bitcoin.marketData.currentPrice.keys) {
+        if (coinsIds[i].symbol == key) {
+          coinsIdsActually.add(coinsIds[i]);
+        }
       }
+    }
+    //   if (bitcoin.marketData.currentPrice.containsKey(coinsIds[i].symbol)) {
+    //     coinsIdsActually.add(coinsIds[i]);
+    //   }
+    // }
+    for (var element in coinsIdsActually) {
+      print(element.symbol);
     }
 
     return coinsIdsActually;
