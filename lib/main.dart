@@ -29,6 +29,8 @@ class MainAppState extends State<MainApp> {
 
   String result = '';
   String result2 = '';
+  String result3 = '';
+
   @override
   void initState() {
     super.initState();
@@ -53,15 +55,10 @@ class MainAppState extends State<MainApp> {
     if (coinSecondz != null) {
       print(
           'Price is = ${coinFirst?.marketData.currentPrice[coinSecondz.symbol.toLowerCase()]}');
+      double? someResult =
+          coinFirst?.marketData.currentPrice[coinSecondz.symbol.toLowerCase()];
+      result3 = someResult.toString();
     }
-
-    // if (result2.isNotEmpty) {
-    //   CoinModel coin = await networkService.getCoin(result);
-    //   CoinModel coin2 = await networkService.getCoin(result2);
-    //   print('downlou Coinnnn ${coin.name}');
-    //   print(
-    //       'Price is = ${coin.marketData.currentPrice[coin2.symbol.toLowerCase()]}');
-    // }
 
     setState(() {
       result = selectedValue;
@@ -74,14 +71,18 @@ class MainAppState extends State<MainApp> {
     if (coinFirst != null) {
       print(
           'Price is = ${coinFirst?.marketData.currentPrice[coinSecond?.symbol.toLowerCase()]}');
+      double? someResult =
+          coinFirst?.marketData.currentPrice[coinSecond?.symbol.toLowerCase()];
+      String someString =
+          '1 ${coinFirst?.id} (${coinFirst?.symbol.toUpperCase()}) = ';
+      String somestring2 =
+          ' ${coinSecond?.id} (${coinSecond?.symbol.toUpperCase()})';
+      result3 = someString + someResult.toString() + somestring2;
     }
     setState(() {
       result2 = selectedValue;
     });
   }
-
-  // CoinModel coin = await networkService.getCoin(_selectedValue!);
-  // print(coin.name);
 
   @override
   Widget build(BuildContext context) {
@@ -97,12 +98,7 @@ class MainAppState extends State<MainApp> {
             children: [
               const TitleWidget(),
               const SizedBox(height: 40),
-              const Padding(
-                  padding: EdgeInsets.only(
-                    left: 8,
-                    right: 8,
-                  ),
-                  child: NumberTextFieldWidget()),
+              NumberTextFieldWidget(),
               const SizedBox(
                 height: 32,
               ),
@@ -129,6 +125,7 @@ class MainAppState extends State<MainApp> {
               const SizedBox(height: 40),
               Text(result),
               Text(result2),
+              Text(result3),
             ],
           ),
         ),
