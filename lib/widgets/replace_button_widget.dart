@@ -1,25 +1,20 @@
 import 'package:flutter/material.dart';
 
-class ReplaceButtonWidget extends StatefulWidget {
-  const ReplaceButtonWidget({super.key});
+class ReplaceButton extends StatelessWidget {
+  final VoidCallback onPressed;
 
-  @override
-  State<ReplaceButtonWidget> createState() => _ReplaceButtonWidgetState();
-}
+  const ReplaceButton({super.key, required this.onPressed});
 
-class _ReplaceButtonWidgetState extends State<ReplaceButtonWidget> {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      onPressed: () {
-        print('Іконка натиснута');
-      },
+      onPressed: onPressed,
       icon: Container(
         decoration: const BoxDecoration(
           color: Colors.blue,
           borderRadius: BorderRadius.all(Radius.circular(4)),
         ),
-        width: 52,
+        width: 48,
         height: 32,
         child: const Icon(
           Icons.repeat,

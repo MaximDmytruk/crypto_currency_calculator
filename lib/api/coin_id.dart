@@ -1,6 +1,3 @@
-
-import 'dart:convert';
-
 class CoinsId {
   String id;
   String symbol;

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 class NumberTextFieldWidget extends StatefulWidget {
-  const NumberTextFieldWidget({super.key});
+  final ValueChanged<String> onSelectedValueChanged;
+
+  const NumberTextFieldWidget(
+      {super.key, required this.onSelectedValueChanged});
 
   @override
   State<NumberTextFieldWidget> createState() => _NumberTextFieldWidgetState();
@@ -38,6 +41,8 @@ class _NumberTextFieldWidgetState extends State<NumberTextFieldWidget> {
             setState(() {
               text = textController.text;
             });
+
+            widget.onSelectedValueChanged(text);
           },
         ),
       ),

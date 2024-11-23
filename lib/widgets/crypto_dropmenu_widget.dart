@@ -1,22 +1,20 @@
 import 'package:crypto_calculator/api/coin_id.dart';
-import 'package:crypto_calculator/api/coin_model.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 
 import '../api/network_service.dart';
 
-class CryptoDropMenuWidget extends StatefulWidget {
+class CryptoDropMenu extends StatefulWidget {
   final List<CoinsId> coinIds;
   final ValueChanged<String> onSelectedValueChanged;
 
-  CryptoDropMenuWidget(
+  const CryptoDropMenu(
       {super.key, required this.coinIds, required this.onSelectedValueChanged});
 
   @override
-  State<CryptoDropMenuWidget> createState() => _CryptoDropMenuWidgetState();
+  State<CryptoDropMenu> createState() => _CryptoDropMenuState();
 }
 
-class _CryptoDropMenuWidgetState extends State<CryptoDropMenuWidget> {
+class _CryptoDropMenuState extends State<CryptoDropMenu> {
   String? _selectedValue;
   NetworkService networkService = NetworkService();
   TextEditingController textEditingController = TextEditingController();
@@ -26,20 +24,29 @@ class _CryptoDropMenuWidgetState extends State<CryptoDropMenuWidget> {
     return DropdownMenu<String>(
       controller: textEditingController,
       requestFocusOnTap: true,
-      label: const Text('Сurrency', style: TextStyle(fontSize: 12)),
+      label: const Text(
+        'Сurrency',
+        style: TextStyle(
+          fontSize: 12,
+        ),
+      ),
       menuStyle: const MenuStyle(
-        backgroundColor: WidgetStatePropertyAll(Colors.white),
+        backgroundColor: WidgetStatePropertyAll(
+          Colors.white,
+        ),
       ),
       onSelected: (value) async {
         setState(() {
           _selectedValue = value;
         });
-        // CoinModel coin = await networkService.getCoin(_selectedValue!);
-        // print(coin.name);
-        widget.onSelectedValueChanged(_selectedValue!);
+        String? newSelectedValue = _selectedValue;
+        if (newSelectedValue != null) {
+          widget.onSelectedValueChanged(newSelectedValue);
+        }
       },
-      dropdownMenuEntries:
-          widget.coinIds.map<DropdownMenuEntry<String>>((CoinsId coin) {
+      dropdownMenuEntries: widget.coinIds.map<DropdownMenuEntry<String>>((
+        CoinsId coin,
+      ) {
         return DropdownMenuEntry<String>(
           value: coin.id,
           label: coin.name,
